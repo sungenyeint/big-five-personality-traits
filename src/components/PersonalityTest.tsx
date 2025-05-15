@@ -85,85 +85,85 @@ export const PersonalityTest = () => {
     const isCurrentQuestionAnswered = answers[currentQuestion.id] !== undefined;
 
     return (
-        <div className="test-container mx-30 my-10 p-6 rounded-lg shadow-md border border-myanmar-gold dark:border-gray-700">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-myanmar-maroon dark:text-myanmar-gold transition-colors duration-300">
-                    {t("Big Five Personality Test", "ကိုယ်ရည်ကိုယ်သွေး ဆန်းစစ်မှု")}
-                </h2>
+        <div className="test-container mx-2 sm:mx-8 md:mx-20 lg:mx-30 my-6 sm:my-10 p-4 sm:p-6 rounded-lg shadow-md border border-myanmar-gold dark:border-gray-700">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-myanmar-maroon dark:text-myanmar-gold transition-colors duration-300">
+                {t("Big Five Personality Test", "ကိုယ်ရည်ကိုယ်သွေး ဆန်းစစ်မှု")}
+            </h2>
             </div>
 
-            <div className="mb-6">
-                <div className="flex justify-between text-sm mb-2">
-                    <span>
-                        {t(
-                            `Question ${currentQuestionIndex + 1} of ${totalQuestions}`,
-                            `မေးခွန်း ${currentQuestionIndex + 1} မှ ${totalQuestions}`
-                        )}
-                    </span>
-                    <span>{Math.round(progress)}%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-200 rounded">
-                    <div
-                        className={`h-2 rounded transition-all duration-300 ${
-                            progress > 0
-                                ? "bg-blue-500"
-                                : "bg-myanmar-gold"
-                        }`}
-                        style={{ width: `${progress}%` }}
+            <div className="mb-4 sm:mb-6">
+            <div className="flex flex-col sm:flex-row justify-between text-xs sm:text-sm mb-1 sm:mb-2">
+                <span>
+                {t(
+                    `Question ${currentQuestionIndex + 1} of ${totalQuestions}`,
+                    `မေးခွန်း ${currentQuestionIndex + 1} မှ ${totalQuestions}`
+                )}
+                </span>
+                <span>{Math.round(progress)}%</span>
+            </div>
+            <div className="w-full h-2 bg-gray-200 rounded">
+                <div
+                className={`h-2 rounded transition-all duration-300 ${
+                    progress > 0
+                    ? "bg-blue-500"
+                    : "bg-myanmar-gold"
+                }`}
+                style={{ width: `${progress}%` }}
+                />
+            </div>
+            </div>
+
+            <div className="rounded-lg shadow-lg p-4 sm:p-6 transition-colors duration-300">
+            <p className="text-base sm:text-lg font-medium mb-4 sm:mb-6">
+                {currentQuestion.text[language]}
+            </p>
+
+            <div className="grid gap-3 sm:gap-4">
+                {[1, 2, 3, 4, 5].map(value => (
+                <label
+                    key={value}
+                    htmlFor={`option-${value}`}
+                    className={`flex items-center space-x-2 sm:space-x-3 border p-2 sm:p-3 rounded-md cursor-pointer transition-colors duration-300
+                    ${answers[currentQuestion.id] === value
+                        ? "bg-myanmar-yellow/20 border-myanmar-gold"
+                        : "hover:bg-myanmar-yellow/10 border-gray-200"
+                    }`
+                    }
+                >
+                    <input
+                    type="radio"
+                    id={`option-${value}`}
+                    name={`question-${currentQuestion.id}`}
+                    value={value}
+                    checked={answers[currentQuestion.id] === value}
+                    onChange={() => handleAnswer(value.toString())}
+                    className="form-radio h-4 w-4 sm:h-5 sm:w-5 text-myanmar-gold focus:ring-myanmar-gold"
                     />
-                </div>
+                    <span className="flex-grow text-xs sm:text-base">{getLikertLabel(value, language)}</span>
+                </label>
+                ))}
             </div>
 
-            <div className="rounded-lg shadow-lg p-6 transition-colors duration-300">
-                <p className="text-lg font-medium mb-6">
-                    {currentQuestion.text[language]}
-                </p>
-
-                <div className="grid gap-4">
-                    {[1, 2, 3, 4, 5].map(value => (
-                        <label
-                            key={value}
-                            htmlFor={`option-${value}`}
-                            className={`flex items-center space-x-3 border p-3 rounded-md cursor-pointer transition-colors duration-300
-                                ${answers[currentQuestion.id] === value
-                                    ? "bg-myanmar-yellow/20 border-myanmar-gold"
-                                    : "hover:bg-myanmar-yellow/10 border-gray-200"
-                                }`
-                            }
-                        >
-                            <input
-                                type="radio"
-                                id={`option-${value}`}
-                                name={`question-${currentQuestion.id}`}
-                                value={value}
-                                checked={answers[currentQuestion.id] === value}
-                                onChange={() => handleAnswer(value.toString())}
-                                className="form-radio h-5 w-5 text-myanmar-gold focus:ring-myanmar-gold"
-                            />
-                            <span className="flex-grow">{getLikertLabel(value, language)}</span>
-                        </label>
-                    ))}
-                </div>
-
-                <div className="flex justify-between mt-6">
-                    <button
-                        onClick={handlePrevious}
-                        disabled={currentQuestionIndex === 0}
-                        className="border border-myanmar-gold text-myanmar-gold px-4 py-2 rounded hover:bg-myanmar-gold/10 hover:text-myanmar-maroon transition-colors duration-300 disabled:opacity-50"
-                    >
-                        {t("Previous", "နောက်သို့")}
-                    </button>
-                    <button
-                        onClick={handleNext}
-                        disabled={!isCurrentQuestionAnswered}
-                        className="border bg-myanmar-gold text-myanmar-maroon px-4 py-2 rounded hover:bg-myanmar-gold/90 transition-colors duration-300 disabled:opacity-50"
-                    >
-                        {currentQuestionIndex < totalQuestions - 1
-                            ? t("Next", "ရှေ့သို့")
-                            : t("Complete", "အပြီးသတ်ရန်")
-                        }
-                    </button>
-                </div>
+            <div className="flex flex-col sm:flex-row justify-between mt-4 sm:mt-6 gap-2 sm:gap-0">
+                <button
+                onClick={handlePrevious}
+                disabled={currentQuestionIndex === 0}
+                className="border border-myanmar-gold text-myanmar-gold px-3 sm:px-4 py-2 rounded hover:bg-myanmar-gold/10 hover:text-myanmar-maroon transition-colors duration-300 disabled:opacity-50"
+                >
+                {t("Previous", "နောက်သို့")}
+                </button>
+                <button
+                onClick={handleNext}
+                disabled={!isCurrentQuestionAnswered}
+                className="border bg-myanmar-gold text-myanmar-maroon px-3 sm:px-4 py-2 rounded hover:bg-myanmar-gold/90 transition-colors duration-300 disabled:opacity-50"
+                >
+                {currentQuestionIndex < totalQuestions - 1
+                    ? t("Next", "ရှေ့သို့")
+                    : t("Complete", "အပြီးသတ်ရန်")
+                }
+                </button>
+            </div>
             </div>
         </div>
     );

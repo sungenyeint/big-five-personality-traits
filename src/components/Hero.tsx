@@ -1,4 +1,3 @@
-
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
@@ -9,17 +8,17 @@ export const Hero = () => {
     const { theme } = useTheme();
 
     return (
-        <div className="relative overflow-hidden bg-gradient-to-b from-myanmar-yellow to-amber-50 px-16">
+        <div className="relative overflow-hidden bg-gradient-to-b from-myanmar-yellow to-amber-50 px-4 sm:px-6 md:px-10 lg:px-16">
             <div className="absolute inset-0 myanmar-pattern opacity-10"></div>
-            <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
-                <div className="flex flex-col md:flex-row items-center">
-                    <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+            <div className="container mx-auto px-0 sm:px-4 py-10 sm:py-16 md:py-24 relative z-10">
+                <div className="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-0">
+                    <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-10">
                         <div className="flex items-center mb-4">
-                            <h1 className="text-3xl md:text-4xl font-bold text-myanmar-maroon">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-myanmar-maroon">
                                 {t("Myanmar Personality Compass", "မြန်မာ ကိုယ်ရည်ကိုယ်သွေး လမ်းညွှန်")}
                             </h1>
                         </div>
-                        <p className="text-lg md:text-xl mb-6 text-gray-700">
+                        <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-700">
                             {t(
                                 "Discover your personality traits through our culturally adapted Big Five personality assessment, designed specifically for Myanmar's cultural context.",
                                 "မြန်မာ့ယဉ်ကျေးမှုနှင့် ကိုက်ညီအောင် ဒီဇိုင်းထုတ်ထားသော Big Five ကိုယ်ရည်ကိုယ်သွေး စစ်ဆေးမှုမှတစ်ဆင့် သင့်ကိုယ်ပိုင်စရိုက်လက္ခဏာများကို ရှာဖွေလေ့လာပါ။"
@@ -67,17 +66,17 @@ export const Hero = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="flex space-x-4">
-                            <Link href="/test" className="border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold inline-block text-center">
+                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                            <Link href="/test" className="flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center bg-myanmar-red text-white hover:bg-myanmar-red/90">
                                 {t("Take the Test", "စစ်ဆေးမှု ပြုလုပ်ရန်")}
                             </Link>
-                            <Link href="/about" className="border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold inline-block text-center">
+                            <Link href="/about" className="flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center bg-white text-myanmar-maroon border-myanmar-gold hover:bg-myanmar-gold/10 dark:bg-gray-800 dark:text-white dark:border-gray-700">
                                 {t("Learn More", "ပိုမိုလေ့လာရန်")}
                             </Link>
                         </div>
                     </div>
-                    <div className="md:w-1/2 flex justify-center">
-                        <div className="relative w-full max-w-md">
+                    <div className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
+                        <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md">
                             <div className="absolute inset-0 bg-myanmar-yellow rounded-full blur-3xl opacity-20 transform -rotate-6"></div>
                             <div
                                 className={`rounded-2xl shadow-lg p-6 border-2 relative z-10 transform rotate-3 hover:rotate-0 transition-transform duration-500 ${theme === "dark"

@@ -1,12 +1,11 @@
-
 import Link from "next/link";
 
 export const Footer = () => {
     return (
-        <footer className="bg-myanmar-maroon py-8 px-16">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-between items-center">
-                    <div className="mb-6 md:mb-0">
+        <footer className="bg-myanmar-maroon py-8 px-4 md:px-8">
+            <div className="max-w-7xl mx-auto px-2 sm:px-4">
+                <div className="flex flex-col gap-8 md:flex-row md:justify-between md:items-start">
+                    <div className="flex-1 mb-6 md:mb-0">
                         <Link href="/" className="flex items-center space-x-2">
                             <span className="text-xl font-bold">Myanmar Personality Compass</span>
                         </Link>
@@ -14,9 +13,8 @@ export const Footer = () => {
                             Discover your personality traits with our culturally adapted Big Five personality test for Myanmar.
                         </p>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-                        <div className="mb-6 md:mb-0">
+                    <div className="flex-1 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
+                        <div>
                             <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider">Navigation</h3>
                             <ul className="space-y-2">
                                 <li>
@@ -36,8 +34,7 @@ export const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-
-                        <div className="mb-6 md:mb-0">
+                        <div>
                             <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider">Learn More</h3>
                             <ul className="space-y-2">
                                 <li>
@@ -57,8 +54,7 @@ export const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-
-                        <div className="mb-6 md:mb-0">
+                        <div>
                             <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider">Contact</h3>
                             <ul className="space-y-2">
                                 <li>
@@ -75,12 +71,14 @@ export const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row md:justify-between md:items-center gap-2 md:gap-0 text-center">
                     <p className="text-sm text-gray-400">
                         &copy; {new Date().getFullYear()} Myanmar Personality Compass. All rights reserved.
                     </p>
-                    <p className="text-sm text-gray-400 mt-4 md:mt-0 flex items-center">
-                        Made with for Myanmar
+                    <p className="text-sm text-gray-400 flex items-center justify-center gap-1">
+                        Made with
+                        <span className="text-red-500 mx-1" aria-label="love" role="img">♥</span>
+                        for Myanmar
                     </p>
                 </div>
             </div>

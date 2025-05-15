@@ -89,18 +89,18 @@ export const TestResults = ({ results, onReset, language }: TestResultsProps) =>
     };
 
     return (
-        <div className="bg-background min-h-screen py-8 px-4 mx-20">
+        <div className="bg-background min-h-screen py-8 px-2 sm:px-4 md:mx-10 lg:mx-20">
             <h2 className="text-2xl font-bold text-primary text-center mb-6">
                 {language === "en" ? "Your Personality Results" : "သင့်ကိုယ်ရည်ကိုယ်သွေး ဆန်းစစ်ရလဒ်များ"}
             </h2>
 
-            <div className="bg-card shadow-lg rounded-lg p-6 mb-8">
+            <div className="bg-card shadow-lg rounded-lg p-4 sm:p-6 mb-8">
                 <h3 className="text-xl font-bold mb-4 text-primary text-center">
                     {language === "en" ? "Your Big Five Personality Profile" : "သင့်ကိုယ်ရည်ကိုယ်သွေး ပရိုဖိုင်"}
                 </h3>
 
                 <div className="mb-8">
-                    <ResponsiveContainer width="100%" height={300}>
+                    <ResponsiveContainer width="100%" height={250} minWidth={200}>
                         <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                             <XAxis dataKey="name" tick={{ fontSize: 12 }} />
@@ -120,7 +120,7 @@ export const TestResults = ({ results, onReset, language }: TestResultsProps) =>
                     </ResponsiveContainer>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {Object.keys(results).map((trait) => {
                         const traitKey = trait as keyof TraitScore;
                         const traitInfo = traitDescriptions[traitKey];

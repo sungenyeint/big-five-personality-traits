@@ -29,7 +29,7 @@ export default function TestPage() {
     }
 
     return (
-        <div className={`py-8 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} min-h-screen transition-colors duration-300`}>
+        <div className={`py-8 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} transition-colors duration-300`}>
             <PersonalityTest />
         </div>
     );
