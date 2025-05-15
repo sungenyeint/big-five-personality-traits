@@ -1,6 +1,6 @@
 "use client";
 
-import { LogIn, LogOut, Sun, Moon, X } from "lucide-react";
+import { LogIn, LogOut, Sun, Moon, X, UserCircle2Icon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Language } from "@/contexts/LanguageContext";
@@ -53,6 +53,26 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     </button>
                 </div>
                 <div className={`${theme === 'light' ? 'bg-gray-50' : 'bg-gray-800'} p-4 rounded-lg shadow-md`}>
+                    {!loading && user && (
+                        <div className="flex items-center gap-3 mb-4 px-2">
+                            {user.photoURL ? (
+                                <span className="w-10 h-10 rounded-full border border-zinc-300 dark:border-zinc-700 shadow-sm overflow-hidden flex items-center justify-center bg-zinc-200 dark:bg-zinc-700">
+                                    <img
+                                        src={user.photoURL}
+                                        alt="avatar"
+                                        className="w-10 h-10 object-cover"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </span>
+                            ) : (
+                                <UserCircle2Icon className="w-10 h-10 text-zinc-400 dark:text-zinc-600" />
+                            )}
+                            <span className="text-base font-semibold max-w-[140px] truncate" title={(user.displayName || user.email) ?? undefined}>
+                                {user.displayName || user.email}
+                            </span>
+                        </div>
+                    )}
                     <nav className="flex flex-col gap-2">
                         <Link
                             href="/"

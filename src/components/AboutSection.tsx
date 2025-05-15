@@ -6,11 +6,11 @@ export const AboutSection = () => {
     const { theme } = useTheme();
 
     return (
-        <div className={`py-10 px-4 sm:px-6 md:px-10 lg:px-16 ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'}`}>
+        <div className={`py-10 px-4 sm:px-6 md:px-10 lg:px-16 ${theme === 'light' ? 'bg-gray-50 text-black' : 'bg-gray-700 text-gray-200'}`}>
             <div className="container mx-auto">
                 <div className="text-center mb-10 sm:mb-12">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">About the Myanmar Personality Compass</h2>
-                    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+                    <p className="text-base sm:text-lg max-w-2xl mx-auto">
                         {t(
                             "Our culturally adapted assessment helps you understand your personality traits within Myanmar's unique cultural context.",
                             "ကျွန်ုပ်တို့၏ ယဉ်ကျေးမှုအရ လိုက်လျောညီထွေဖြစ်အောင် အကဲဖြတ်ခြင်းသည် မြန်မာနိုင်ငံ၏ ထူးခြားသော ယဉ်ကျေးမှုဆိုင်ရာ အကြောင်းအရာများအတွင်းတွင် သင်၏ ကိုယ်ရည်ကိုယ်သွေး စရိုက်များကို နားလည်ရန် ကူညီပေးပါသည်။")}
@@ -18,8 +18,8 @@ export const AboutSection = () => {
                 </div>
 
                 <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="rounded-lg shadow p-6 border bg-white/80 dark:bg-gray-800 dark:border-gray-700">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">The Science</h3>
+                    <div className="rounded-lg shadow p-6 border bg-white/80">
+                        <h3 className="text-lg text-gray-700 sm:text-xl font-bold mb-2">The Science</h3>
                         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                             {t(
                                 "The Big Five personality model is one of the most scientifically validated frameworks for understanding human personality. Our assessment is based on decades of research.",
@@ -28,8 +28,8 @@ export const AboutSection = () => {
                         </p>
                     </div>
 
-                    <div className="rounded-lg shadow p-6 border bg-white/80 dark:bg-gray-800 dark:border-gray-700">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">Cultural Adaptation</h3>
+                    <div className="rounded-lg shadow p-6 border bg-white/80">
+                        <h3 className="text-lg text-gray-700 sm:text-xl font-bold mb-2">Cultural Adaptation</h3>
                         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                             {t(
                                 "We've carefully adapted the Big Five assessment to reflect Myanmar's cultural values, social norms, and linguistic nuances, ensuring that results are relevant and meaningful.",
@@ -37,8 +37,8 @@ export const AboutSection = () => {
                         </p>
                     </div>
 
-                    <div className="rounded-lg shadow p-6 border bg-white/80 dark:bg-gray-800 dark:border-gray-700">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">Why It Matters</h3>
+                    <div className="rounded-lg shadow p-6 border bg-white/80">
+                        <h3 className="text-lg text-gray-700 sm:text-xl font-bold mb-2">Why It Matters</h3>
                         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                             {t(
                                 "Understanding your personality can help improve self-awareness, enhance relationships, guide career decisions, and provide insights into your strengths and growth areas.",
@@ -47,8 +47,8 @@ export const AboutSection = () => {
                         </p>
                     </div>
 
-                    <div className="rounded-lg shadow p-6 border bg-white/80 dark:bg-gray-800 dark:border-gray-700">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">How It Works</h3>
+                    <div className="rounded-lg shadow p-6 border bg-white/80">
+                        <h3 className="text-lg text-gray-700 sm:text-xl font-bold mb-2">How It Works</h3>
                         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                             {t(
                                 "Our assessment uses carefully crafted questions to measure the five major dimensions of personality. Your responses help create a personalized profile that reflects your unique traits.",
@@ -57,8 +57,8 @@ export const AboutSection = () => {
                         </p>
                     </div>
 
-                    <div className="rounded-lg shadow p-6 border bg-white/80 dark:bg-gray-800 dark:border-gray-700 md:col-span-2 lg:col-span-1">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">Our Mission</h3>
+                    <div className="rounded-lg shadow p-6 border bg-white/80 md:col-span-2 lg:col-span-1">
+                        <h3 className="text-lg text-gray-700 sm:text-xl font-bold mb-2">Our Mission</h3>
                         <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                             {t(
                                 "We aim to provide accessible, culturally relevant psychological tools that help people in Myanmar better understand themselves and others, fostering greater self-awareness and social harmony.",

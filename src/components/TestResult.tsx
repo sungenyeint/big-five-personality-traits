@@ -100,24 +100,28 @@ export const TestResults = ({ results, onReset, language }: TestResultsProps) =>
                 </h3>
 
                 <div className="mb-8">
-                    <ResponsiveContainer width="100%" height={250} minWidth={200}>
-                        <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                            <YAxis domain={[0, 5]} tick={{ fontSize: 12 }} />
-                            <Tooltip formatter={(value: number) => [value, ""]} />
-                            <Line
-                                type="monotone"
-                                dataKey="score"
-                                stroke="#CE1126"
-                                strokeWidth={3}
-                                dot={{ r: 6, fill: "#CE1126" }}
-                                activeDot={{ r: 8, fill: "#CE1126" }}
-                                name={language === "en" ? "Your Score" : "သင့်ရမှတ်"}
-                            />
-                            <Legend />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <div className="w-full overflow-x-auto">
+                        <div style={{ minWidth: 400, width: "100%", maxWidth: 700, margin: "0 auto" }}>
+                            <ResponsiveContainer width="100%" height={250}>
+                                <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                    <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                                    <YAxis domain={[0, 5]} tick={{ fontSize: 12 }} />
+                                    <Tooltip formatter={(value: number) => [value, ""]} />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="score"
+                                        stroke="#CE1126"
+                                        strokeWidth={3}
+                                        dot={{ r: 6, fill: "#CE1126" }}
+                                        activeDot={{ r: 8, fill: "#CE1126" }}
+                                        name={language === "en" ? "Your Score" : "သင့်ရမှတ်"}
+                                    />
+                                    <Legend />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

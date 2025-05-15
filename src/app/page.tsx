@@ -22,14 +22,14 @@ export default function Home() {
                                 "သင့်ကိုယ်ပိုင်စရိုက်ကို လေ့လာရန် အဆင်သင့်ဖြစ်ပြီလား?"
                             )}
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8">
+                        <p className="text-base sm:text-lg text-gray-500 dark:text-gray-300 mb-8">
                             {t(
                                 "Take our scientifically validated, culturally adapted Big Five personality test designed specifically for Myanmar.",
                                 "မြန်မာနိုင်ငံအတွက် ယဉ်ကျေးမှုနှင့် ကိုက်ညီအောင် ဒီဇိုင်းထုတ်ထားသော သိပ္ပံနည်းကျ Big Five ကိုယ်ရည်ကိုယ်သွေး စစ်ဆေးမှုကို ပြုလုပ်ပါ။"
                             )}
                         </p>
                         <Link href="/test" className="inline-block">
-                            <button className="w-full sm:w-auto px-6 py-3 rounded-lg bg-myanmar-red hover:bg-myanmar-red/90 text-white font-semibold text-lg shadow transition-colors duration-200">
+                            <button className="w-full sm:w-auto px-6 py-3 rounded-lg font-semibold text-lg shadow transition-colors duration-200">
                                 {t("Start the Test", "စစ်ဆေးမှုစတင်ရန်")}
                             </button>
                         </Link>
