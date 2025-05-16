@@ -66,11 +66,11 @@ export const Hero = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                            <Link href="/test" className="flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center bg-myanmar-red text-white hover:bg-myanmar-red/90">
+                        <div className={`flex flex-col sm:flex-row gap-4 w-full sm:w-auto`}>
+                            <Link href="/test" className={`flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center ${theme === 'light' ? 'text-gray-700' : 'bg-gray-700 text-gray-200'}`}>
                                 {t("Take the Test", "စစ်ဆေးမှု ပြုလုပ်ရန်")}
                             </Link>
-                            <Link href="/about" className="flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center bg-white text-myanmar-maroon border-myanmar-gold hover:bg-myanmar-gold/10 dark:bg-gray-800 dark:text-white dark:border-gray-700">
+                            <Link href="/about" className={`flex-1 sm:flex-none border hover:text-gray-400 px-4 py-2 rounded transition-colors font-semibold text-center ${theme === 'light' ? 'text-gray-700' : 'bg-gray-700 text-gray-200'}`}>
                                 {t("Learn More", "ပိုမိုလေ့လာရန်")}
                             </Link>
                         </div>

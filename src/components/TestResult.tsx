@@ -1,7 +1,10 @@
-
 import { Language, traitDescriptions } from "@/data/questions";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { ArrowUpCircle, ArrowDownCircle, MinusCircle, RefreshCcw, Download } from "lucide-react";
+import { db } from "@/contexts/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
 
 interface TraitScore {
     openness: number;
@@ -15,9 +18,42 @@ interface TestResultsProps {
     results: TraitScore;
     onReset: () => void;
     language: Language;
+    isNew: boolean;
 }
 
-export const TestResults = ({ results, onReset, language }: TestResultsProps) => {
+export const TestResults = ({ results, onReset, language, isNew }: TestResultsProps) => {
+    const { user } = useAuth();
+
+    const [saving, setSaving] = useState(false);
+    const [saveSuccess, setSaveSuccess] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
+
+    const handleSaveResults = async () => {
+        if (!user || !isNew) return;
+        setSaving(true);
+        setSaveSuccess(false);
+        setSaveError(null);
+        try {
+            await addDoc(collection(db, "testResults"), {
+                userId: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                results,
+                language,
+                createdAt: Timestamp.now(),
+            });
+            setSaveSuccess(true);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setSaveError(err.message);
+            } else {
+                setSaveError("Error saving results");
+            }
+        } finally {
+            setSaving(false);
+        }
+    };
+
     // Prepare data for chart
     const chartData = [
         {
@@ -173,7 +209,31 @@ export const TestResults = ({ results, onReset, language }: TestResultsProps) =>
                         <Download className="h-5 w-5" />
                         {language === "en" ? "Download Results" : "ရလဒ်များကို ဒေါင်းလုဒ်လုပ်ရန်"}
                     </button>
+                    {user && isNew && (
+                        <button
+                            onClick={handleSaveResults}
+                            disabled={saving}
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-blue-500 text-blue-500 font-semibold shadow transition disabled:opacity-50"
+                        >
+                            {saving ? (
+                                <span className="animate-spin mr-2 w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full"></span>
+                            ) : (
+                                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            )}
+                            {language === "en" ? "Save to Profile" : "ကိုယ်ရေးအချက်အလက်သို့ သိမ်းမည်"}
+                        </button>
+                    )}
                 </div>
+                {saveSuccess && (
+                    <div className="mt-4 text-green-600 text-center text-sm font-semibold">
+                        {language === "en" ? "Results saved to your profile!" : "ရလဒ်များကို ကိုယ်ရေးအချက်အလက်သို့ သိမ်းပြီးပါပြီ။"}
+                    </div>
+                )}
+                {saveError && (
+                    <div className="mt-4 text-red-600 text-center text-sm font-semibold">
+                        {saveError}
+                    </div>
+                )}
             </div>
         </div>
     );

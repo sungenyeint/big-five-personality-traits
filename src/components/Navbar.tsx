@@ -97,18 +97,18 @@ const Navbar = () => {
                             <LanguagesIcon className="h-5 w-5" />
                         </button>
                         {langDropdown && (
-                            <div className="absolute right-0 mt-2 w-32 bg-sidebar-background border border-sidebar-muted rounded-lg shadow-lg z-30 animate-fade-in">
+                            <div className={`${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} absolute right-0 mt-2 w-25 border border-sidebar-muted rounded-lg shadow-lg z-30 animate-fade-in`}>
                                 <button
                                     onClick={() => { handleLanguageChange("en"); setLangDropdown(false); }}
                                     className={`w-full text-left px-4 py-2 rounded-t-lg hover:bg-sidebar-muted transition-colors flex items-center gap-2 ${language === "en" ? "font-bold text-blue-600" : ""}`}
                                 >
-                                    EN {language === "en" && <span className="inline-block w-2 h-2 rounded-full bg-green-400 ml-1" title="Active"></span>}
+                                    EN {language === "en" && <span className="inline-block w-2 h-2 rounded-full bg-purple-400 ml-1" title="Active"></span>}
                                 </button>
                                 <button
                                     onClick={() => { handleLanguageChange("my"); setLangDropdown(false); }}
                                     className={`w-full text-left px-4 py-2 rounded-b-lg hover:bg-sidebar-muted transition-colors flex items-center gap-2 ${language === "my" ? "font-bold text-blue-600" : ""}`}
                                 >
-                                    မြန်မာ {language === "my" && <span className="inline-block w-2 h-2 rounded-full bg-green-400 ml-1" title="Active"></span>}
+                                    မြန်မာ {language === "my" && <span className="inline-block w-2 h-2 rounded-full bg-purple-400 ml-1" title="Active"></span>}
                                 </button>
                             </div>
                         )}
