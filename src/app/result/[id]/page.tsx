@@ -1,10 +1,15 @@
-import { Language, traitDescriptions } from "@/data/questions";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { ArrowUpCircle, ArrowDownCircle, MinusCircle, RefreshCcw, Download } from "lucide-react";
-import { db } from "@/contexts/firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+"use client";
+
+import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useState } from "react";
+import { db } from "@/contexts/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
+import { traitDescriptions } from "@/data/questions";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { ArrowUpCircle, ArrowDownCircle, MinusCircle } from "lucide-react";
 
 interface TraitScore {
     openness: number;
@@ -14,104 +19,93 @@ interface TraitScore {
     neuroticism: number;
 }
 
-interface TestResultsProps {
-    results: TraitScore;
-    onReset: () => void;
-    language: Language;
-    isNew: boolean;
+interface ResultType {
+    openness: number;
+    conscientiousness: number;
+    extraversion: number;
+    agreeableness: number;
+    neuroticism: number;
 }
 
-export const TestResults = ({ results, onReset, language, isNew }: TestResultsProps) => {
-    const { user } = useAuth();
+export default function TestResultPage() {
+    const params = useParams();
+    const id = typeof params.id === "string" ? params.id : Array.isArray(params.id) ? params.id[0] : "";
+    const { user, loading } = useAuth();
+    const [results, setResults] = useState<ResultType | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const { t, language } = useLanguage();
+    const router = useRouter();
 
-    const [saving, setSaving] = useState(false);
-    const [saveSuccess, setSaveSuccess] = useState(false);
-    const [saveError, setSaveError] = useState<string | null>(null);
-
-    const handleSaveResults = async () => {
-        if (!user || !isNew) return;
-        // Input validation: ensure all trait values are numbers between 1 and 5
-        const isValidResults = results &&
-            Object.values(results).every(
-                (v) => typeof v === "number" && v >= 1 && v <= 5
-            );
-        if (!isValidResults) {
-            setSaveError("Invalid test results.");
-            setSaving(false);
-            return;
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace("/login");
         }
-        setSaving(true);
-        setSaveSuccess(false);
-        setSaveError(null);
-        try {
-            await addDoc(collection(db, "testResults"), {
-                userId: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                results,
-                language,
-                createdAt: Timestamp.now(),
-            });
-            setSaveSuccess(true);
-            setSaving(false);
+    }, [user, loading, router]);
 
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                setSaveError(err.message);
-            } else {
-                setSaveError("Error saving results");
+    useEffect(() => {
+        const fetchResult = async () => {
+            if (!user || !id) return;
+            try {
+                const docRef = doc(db, "testResults", id);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    setError(t("Result not found", "ရလဒ်ကို ရှာမတွေ့ပါ"));
+                    return;
+                }
+
+                const data = docSnap.data();
+                if (data.userId !== user.uid) {
+                    setError(
+                        t(
+                            "You don't have permission to view this result",
+                            "ဤရလဒ်ကို ကြည့်ရှုခွင့် မရှိပါ"
+                        )
+                    );
+                    return;
+                }
+
+                setResults(data.results as ResultType);
+            } catch (e) {
+                setError(t("Failed to load result", "ရလဒ်ကို ဖတ်၍မရပါ"));
+                console.error("Error fetching result:", e);
             }
-            setSaving(true);
-        }
-    };
+        };
+        fetchResult();
+    }, [id, user, t]);
 
     // Prepare data for chart
     const chartData = [
         {
             name: language === "en" ? "Openness" : "လက်ခံနိုင်မှု",
-            score: results.openness,
+            score: results?.openness,
             full: 5,
         },
         {
             name: language === "en" ? "Conscientiousness" : "တာဝန်သိမှု",
-            score: results.conscientiousness,
+            score: results?.conscientiousness,
             full: 5,
         },
         {
             name: language === "en" ? "Extraversion" : "ပြင်ပဆက်ဆံမှု",
-            score: results.extraversion,
+            score: results?.extraversion,
             full: 5,
         },
         {
             name: language === "en" ? "Agreeableness" : "သဟဇာတဖြစ်မှု",
-            score: results.agreeableness,
+            score: results?.agreeableness,
             full: 5,
         },
         {
             name: language === "en" ? "Emotional Stability" : "စိတ်ခံစားမှုတည်ငြိမ်မှု",
-            score: 6 - results.neuroticism, // Invert neuroticism to represent as emotional stability
+            score: results?.neuroticism ? 6 - results.neuroticism : 0, // Invert neuroticism to represent as emotional stability
             full: 5,
         },
     ];
 
-    const handleDownloadResults = () => {
-        const fileName = "myanmar-personality-results.json";
-        const json = JSON.stringify(results, null, 2);
-        const blob = new Blob([json], { type: "application/json" });
-        const href = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-        link.href = href;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-
-        document.body.removeChild(link);
-        URL.revokeObjectURL(href);
-    };
-
     // Function to get trait level description
     const getTraitLevel = (trait: keyof TraitScore) => {
+        if (!results) return "low";
         const score = trait === "neuroticism" ? results[trait] : results[trait]; // Already inverted for display
 
         if (score >= 4) {
@@ -134,6 +128,32 @@ export const TestResults = ({ results, onReset, language, isNew }: TestResultsPr
             return <ArrowDownCircle className="h-6 w-6 text-myanmar-red" />;
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                {t("Loading...", "ဖွင့်နေသည်...")}
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="max-w-3xl mx-auto p-6 my-12">
+                <div className="bg-red-50 dark:bg-red-900/20 text-red-600 p-4 rounded mb-4">
+                    {error}
+                </div>
+                <Link
+                    href="/my-results"
+                    className="text-myanmar-maroon hover:text-myanmar-gold transition-colors"
+                >
+                    ← {t("Back to My Results", "ရလဒ်များစာရင်းသို့ ပြန်သွားမည်")}
+                </Link>
+            </div>
+        );
+    }
+
+    if (!results) return null;
 
     return (
         <div className="bg-background min-h-screen py-8 px-2 sm:px-4 md:mx-10 lg:mx-20">
@@ -204,50 +224,8 @@ export const TestResults = ({ results, onReset, language, isNew }: TestResultsPr
                         );
                     })}
                 </div>
-
-                <div className="mt-8 flex flex-col md:flex-row gap-4 justify-center">
-                    <button
-                        onClick={onReset}
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-myanmar-teal text-myanmar-teal font-semibold shadow transition"
-                    >
-                        <RefreshCcw className="h-5 w-5" />
-                        {language === "en" ? "Take Test Again" : "စစ်ဆေးမှု ပြန်လုပ်ရန်"}
-                    </button>
-                    <button
-                        onClick={handleDownloadResults}
-                        className="flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-myanmar-teal text-myanmar-teal font-semibold shadow transition"
-                    >
-                        <Download className="h-5 w-5" />
-                        {language === "en" ? "Download Results" : "ရလဒ်များကို ဒေါင်းလုဒ်လုပ်ရန်"}
-                    </button>
-                    {user && isNew && (
-                        <button
-                            onClick={handleSaveResults}
-                            disabled={saving}
-                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-md border border-blue-500 text-blue-500 font-semibold shadow transition disabled:opacity-50"
-                        >
-                            {saving ? (
-                                <span className="animate-spin mr-2 w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full"></span>
-                            ) : (
-                                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                            )}
-                            {language === "en" ? "Save to Profile" : "ကိုယ်ရေးအချက်အလက်သို့ သိမ်းမည်"}
-                        </button>
-                    )}
-                </div>
-                {saveSuccess && (
-                    <div className="mt-4 text-green-600 text-center text-sm font-semibold">
-                        {language === "en" ? "Results saved to your profile!" : "ရလဒ်များကို ကိုယ်ရေးအချက်အလက်သို့ သိမ်းပြီးပါပြီ။"}
-                    </div>
-                )}
-                {saveError && (
-                    <div className="mt-4 text-red-600 text-center text-sm font-semibold">
-                        {saveError}
-                    </div>
-                )}
             </div>
         </div>
     );
-};
+}
 
-export default TestResults;

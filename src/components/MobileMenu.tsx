@@ -2,7 +2,7 @@
 
 import { LogIn, LogOut, Sun, Moon, X, UserCircle2Icon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { Language } from "@/contexts/LanguageContext";
 import { User } from "firebase/auth";
 
@@ -33,6 +33,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     language,
     handleLanguageChange,
 }) => {
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
     if (!open) return null;
     return (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-start justify-end md:hidden" onClick={() => setOpen(false)}>
@@ -76,26 +78,42 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     <nav className="flex flex-col gap-2">
                         <Link
                             href="/"
-                            className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/" ? "bg-blue-500 text-white" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`}
+                            className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/" ? "bg-sidebar-primary text-purple-500" : "hover:bg-sidebar-accent/60"}`}
                             onClick={() => setOpen(false)}
                         >
                             {t("Home", "ပင်မ")}
                         </Link>
                         <Link
                             href="/about"
-                            className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/about" ? "bg-blue-500 text-white" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`}
+                            className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/about" ? "bg-sidebar-primary text-purple-500" : "hover:bg-sidebar-accent/60"}`}
                             onClick={() => setOpen(false)}
                         >
                             {t("About", "အကြောင်း")}
                         </Link>
                         {user && (
-                            <Link
-                                href="/test"
-                                className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/test" ? "bg-blue-500 text-white" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`}
-                                onClick={() => setOpen(false)}
-                            >
-                                {t("Personality Test", "ကိုယ်ရည်ကိုယ်သွေး စမ်းသပ်မှု")}
-                            </Link>
+                            <>
+                                <Link
+                                    href="/test"
+                                    className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/test" ? "bg-sidebar-primary text-purple-500" : "hover:bg-sidebar-accent/60"}`}
+                                    onClick={() => setOpen(false)}
+                                >
+                                    {t("Personality Test", "ကိုယ်ရည်ကိုယ်သွေး စမ်းသပ်မှု")}
+                                </Link>
+                                <Link
+                                    href="/profile"
+                                    className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/profile" ? "bg-sidebar-primary text-purple-500" : "hover:bg-sidebar-accent/60"}`}
+                                    onClick={() => setOpen(false)}
+                                >
+                                    {t("Profile", "ကိုယ်ရေးအချက်အလက်")}
+                                </Link>
+                                <Link
+                                    href="/my-results"
+                                    className={`py-2 px-4 rounded-lg text-base font-medium transition-colors ${pathname === "/my-results" ? "bg-sidebar-primary text-purple-500" : "hover:bg-sidebar-accent/60"}`}
+                                    onClick={() => setOpen(false)}
+                                >
+                                    {t("My Results", "ကျွန်ုပ်၏ရလဒ်များ")}
+                                </Link>
+                            </>
                         )}
                     </nav>
                     <div className="flex gap-2 mt-2 items-center justify-between border-t border-zinc-200 dark:border-zinc-800 pt-4">
@@ -125,10 +143,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                         {!loading && (
                             user ? (
                                 <button
-                                    onClick={() => {
-                                        logout();
-                                        setOpen(false);
-                                    }}
+                                    onClick={() => setShowLogoutConfirm(true)}
                                     className="w-full flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors text-base font-semibold shadow focus:outline-none focus:ring-2 focus:ring-red-400"
                                 >
                                     <LogOut className="h-5 w-5" />
@@ -144,6 +159,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                                     {t("Login", "လော့ဂ်အင်")}
                                 </Link>
                             )
+                        )}
+                        {showLogoutConfirm && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                                <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-lg">
+                                    <div className="mb-4">{t("Are you sure you want to log out?", "ထွက်မည်မှာ သေချာပါသလား?")}</div>
+                                    <div className="flex gap-4">
+                                        <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => { logout(); setShowLogoutConfirm(false); }}>{t("Yes, Logout", "ထွက်မည်")}</button>
+                                        <button className="bg-gray-300 px-4 py-2 rounded" onClick={() => setShowLogoutConfirm(false)}>{t("Cancel", "မလုပ်တော့ပါ")}</button>
+                                    </div>
+                                </div>
+                            </div>
                         )}
                     </div>
                     <div className="mt-auto text-xs text-zinc-400 text-center pt-8">
