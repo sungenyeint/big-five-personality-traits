@@ -118,35 +118,35 @@ export default function MyResultsPage() {
                 {results.map((r) => (
                     <div
                         key={r.id}
-                        className="border dark:border-gray-700 rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-blue-50/60 via-white to-purple-50/40 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+                        className={`${theme === "light" ? "bg-gradient-to-br from-blue-50/60 via-white to-purple-50/40" : "dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"} border rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow`}
                     >
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-mono">
+                                    <span className="text-xs sm:text-sm text-gray-500 font-mono">
                                         {new Date(r.createdAt.seconds * 1000).toLocaleString()}
                                     </span>
                                 </div>
                                 <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs sm:text-sm">
-                                    <div className="p-3 rounded-lg flex flex-col items-center bg-blue-100 dark:bg-blue-900/30">
-                                        <span className="font-semibold text-blue-700 dark:text-blue-300 mb-1">{t("Openness", "ပွင့်လင်းမှု")}</span>
-                                        <span className="text-lg font-bold text-blue-600 dark:text-blue-200">{r.results.openness?.toFixed(2)}</span>
+                                    <div className="p-3 rounded-lg flex flex-col items-center bg-blue-100">
+                                        <span className="font-semibold text-blue-700 mb-1">{t("Openness", "ပွင့်လင်းမှု")}</span>
+                                        <span className="text-lg font-bold text-blue-600">{r.results.openness?.toFixed(2)}</span>
                                     </div>
                                     <div className="p-3 rounded-lg flex flex-col items-center bg-green-100 dark:bg-green-900/30">
-                                        <span className="font-semibold text-green-700 dark:text-green-300 mb-1">{t("Conscientiousness", "စိတ်ရင်းစေတနာ")}</span>
-                                        <span className="text-lg font-bold text-green-600 dark:text-green-200">{r.results.conscientiousness?.toFixed(2)}</span>
+                                        <span className="font-semibold text-green-700 mb-1">{t("Conscientiousness", "စိတ်ရင်းစေတနာ")}</span>
+                                        <span className="text-lg font-bold text-green-600">{r.results.conscientiousness?.toFixed(2)}</span>
                                     </div>
                                     <div className="p-3 rounded-lg flex flex-col items-center bg-yellow-100 dark:bg-yellow-900/30">
-                                        <span className="font-semibold text-yellow-700 dark:text-yellow-300 mb-1">{t("Extraversion", "ပွင့်လင်းပြောင်လင်မှု")}</span>
-                                        <span className="text-lg font-bold text-yellow-600 dark:text-yellow-200">{r.results.extraversion?.toFixed(2)}</span>
+                                        <span className="font-semibold text-yellow-700 mb-1">{t("Extraversion", "ပွင့်လင်းပြောင်လင်မှု")}</span>
+                                        <span className="text-lg font-bold text-yellow-600">{r.results.extraversion?.toFixed(2)}</span>
                                     </div>
                                     <div className="p-3 rounded-lg flex flex-col items-center bg-purple-100 dark:bg-purple-900/30">
-                                        <span className="font-semibold text-purple-700 dark:text-purple-300 mb-1">{t("Agreeableness", "သဘောတူညီမှု")}</span>
-                                        <span className="text-lg font-bold text-purple-600 dark:text-purple-200">{r.results.agreeableness?.toFixed(2)}</span>
+                                        <span className="font-semibold text-purple-700 mb-1">{t("Agreeableness", "သဘောတူညီမှု")}</span>
+                                        <span className="text-lg font-bold text-purple-600 ">{r.results.agreeableness?.toFixed(2)}</span>
                                     </div>
                                     <div className="p-3 rounded-lg flex flex-col items-center bg-red-100 dark:bg-red-900/30">
-                                        <span className="font-semibold text-red-700 dark:text-red-300 mb-1">{t("Neuroticism", "စိတ်ခံစားမှု")}</span>
-                                        <span className="text-lg font-bold text-red-600 dark:text-red-200">{r.results.neuroticism?.toFixed(2)}</span>
+                                        <span className="font-semibold text-red-700 mb-1">{t("Neuroticism", "စိတ်ခံစားမှု")}</span>
+                                        <span className="text-lg font-bold text-red-600 ">{r.results.neuroticism?.toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>

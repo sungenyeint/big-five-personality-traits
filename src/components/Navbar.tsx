@@ -169,7 +169,7 @@ const Navbar = () => {
                                                     toggleTheme();
                                                     setTimeout(() => setSettingsDropdown(false), 150);
                                                 }}
-                                                className="ml-2 px-2 py-1 rounded bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-primary transition-colors text-xl flex items-center justify-center"
+                                                className="ml-2 px-2 py-1 rounded bg-sidebar-accent text-sidebar-accent-foreground cursor-pointer hover:bg-sidebar-primary transition-colors text-xl flex items-center justify-center"
                                             >
                                                 {theme === "dark" ? (
                                                     <Moon className="h-5 w-5" />
@@ -186,9 +186,9 @@ const Navbar = () => {
                                                         handleLanguageChange("en");
                                                         setTimeout(() => setSettingsDropdown(false), 100);
                                                     }}
-                                                    className={`px-2 py-1 rounded text-xs font-semibold ${language === "en"
+                                                    className={`px-2 py-1 rounded text-xs font-semibold cursor-pointer ${language === "en"
                                                             ? "bg-blue-500 text-white"
-                                                            : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                                            : "hover:bg-zinc-100 hover:text-white dark:hover:bg-zinc-800"
                                                         }`}
                                                 >
                                                     EN
@@ -198,9 +198,9 @@ const Navbar = () => {
                                                         handleLanguageChange("my");
                                                         setTimeout(() => setSettingsDropdown(false), 100);
                                                     }}
-                                                    className={`px-2 py-1 rounded text-xs font-semibold ${language === "my"
+                                                    className={`px-2 py-1 rounded text-xs font-semibold cursor-pointer ${language === "my"
                                                             ? "bg-blue-500 text-white"
-                                                            : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                                            : "hover:bg-zinc-100 hover:text-white dark:hover:bg-zinc-800"
                                                         }`}
                                                 >
                                                     မြန်မာ

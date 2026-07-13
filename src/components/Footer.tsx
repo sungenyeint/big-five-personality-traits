@@ -76,9 +76,7 @@ export const Footer = () => {
                         &copy; {new Date().getFullYear()} Myanmar Personality Compass. All rights reserved.
                     </p>
                     <p className="text-sm text-gray-400 flex items-center justify-center gap-1">
-                        Made with
-                        <span className="text-red-500 mx-1" aria-label="love" role="img">♥</span>
-                        for Myanmar
+                        Made with for Myanmar
                     </p>
                 </div>
             </div>

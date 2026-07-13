@@ -76,7 +76,7 @@ export default function ProfilePage() {
             <div className="mb-4">
                 <label className="block mb-1 font-medium">{t("Display Name", "အမည်")}</label>
                 <input
-                    className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700"
+                    className={`${theme === "light" ? "bg-white" : "dark:bg-gray-800 dark:border-gray-700"} w-full border rounded px-3 py-2`}
                     value={displayName}
                     onChange={e => setDisplayName(e.target.value)}
                     placeholder={t("Enter your name", "သင့်အမည်ကို ထည့်သွင်းပါ")}
@@ -85,7 +85,7 @@ export default function ProfilePage() {
             <div className="mb-4">
                 <label className="block mb-1 font-medium">{t("Email", "အီးမေးလ်")}</label>
                 <input
-                    className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700"
+                    className={`${theme === "light" ? "bg-white" : "dark:bg-gray-800 dark:border-gray-700"} w-full border rounded px-3 py-2`}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder={t("Enter your email", "သင့်အီးမေးလ်ထည့်ပါ")}
@@ -95,7 +95,7 @@ export default function ProfilePage() {
             <div className="mb-4">
                 <label className="block mb-1 font-medium">{t("New Password", "စကားဝှက်အသစ်")}</label>
                 <input
-                    className="w-full border rounded px-3 py-2 dark:bg-gray-800 dark:border-gray-700"
+                    className={`${theme === "light" ? "bg-white" : "dark:bg-gray-800 dark:border-gray-700"} w-full border rounded px-3 py-2`}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder={t("Enter new password", "စကားဝှက်အသစ်ထည့်ပါ")}
